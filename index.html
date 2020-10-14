@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="None">
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <title>Home &mdash; NoStack</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400,700">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css">
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/v4-shims.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script> 
+</head>
+
+<body ontouchstart="">
+    <div id="container">
+        <aside>
+            <div class="home">
+                <div class="title">
+                    <button class="hamburger"></button>
+                    <a href="." class="site-name"> NoStack</a>
+                </div>
+                <div class="search">
+                    <div role="search">
+    <form id="rtd-search-form" class="wy-form" action="./search.html" method="get">
+        <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+    </form>
+</div>
+                </div>
+            </div>
+            <nav class="nav">
+                <ul class="root">
+                    <li class="toctree-l1 current"><a class="nav-item current" href=".">Home</a>
+<ul class="subnav">
+<li class="toctree-l2"><a class="nav-item toc" href="#why">Why</a></li>
+<li class="toctree-l2"><a class="nav-item toc" href="#what">What</a></li>
+<li class="toctree-l2"><a class="nav-item toc" href="#how">How</a></li>
+<li class="toctree-l2"><a class="nav-item toc" href="#plans">Plans</a></li>
+<li class="toctree-l2"><a class="nav-item toc" href="#contributing">Contributing</a></li>
+<li class="toctree-l2"><a class="nav-item toc" href="#usage">Usage</a></li>
+<li class="toctree-l2"><a class="nav-item toc" href="#commands">Commands</a></li>
+</ul></li>
+                </ul>
+            </nav>
+            <div class="repo">
+</div>
+        </aside>
+        <div id="spacer"><button class="arrow"></button></div>
+        <main>
+            <div class="home-top">
+                <button class="hamburger"></button>
+                <a href="." class="site-name"> NoStack</a>
+            </div>
+            <div id="main">
+                <nav class="breadcrumbs">
+<ul>
+    
+</ul>
+</nav>
+                <div id="content"><h1 id="ns-flip">ns-flip</h1>
+<p>A tool for creating and using <em>updatable</em> code templates.  Supports regeneration of code without losing custom changes. Framework agnostic.</p>
+<!-- toc -->
+<ul>
+<li><a href="#why">Why</a></li>
+<li><a href="#what">What</a></li>
+<li><a href="#how">How</a></li>
+<li><a href="#plans">Plans</a></li>
+<li><a href="#contributing">Contributing</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#commands">Commands</a>
+<!-- tocstop -->
+</li>
+</ul>
+<h2 id="why">Why</h2>
+<p>After you generate code with a template or tool, you make changes to the code.  But then usually you can't regenerate it without losing your changes.  So you can't apply an updated template or change to another similar template. Keeping your "legacy code" current becomes an expensive pain.  </p>
+<h2 id="what">What</h2>
+<p>ns-flip is a CLI to support code templates that can be exchanged as easily as WordPress themes.</p>
+<p>A template can support three types of files:</p>
+<ol>
+<li>standard (appear in every generated code base, e.g. 'App.jsx')</li>
+<li>custom static (static, but must be custom specified for each code base, e.g. steps in an input stepper)</li>
+<li>custom dynamic (based on queries e.g. components showing query results).</li>
+</ol>
+<p>You can create templates with locations designated for custom code.  You can also name regions that can be replaced or removed in the generated code.  Ns-flip stores the custom changes before regenerating and restores them.</p>
+<h2 id="how">How</h2>
+<p>A template is a directory with requirements explained in the <a href="https://github.com/NoStackApp/ns-flip/wiki">documentation</a>.  You can use it privately or distribute it.  To create one, you will need a basic working knowledge of <a href="https://handlebarsjs.com/guide/">Handlebars</a> and not much more.</p>
+<p>To create code from a template:
+1. Create a "starter" directory by calling <a href="#ns-newstarter"><code>ns newstarter -t &lt;template&gt; -s &lt;starter&gt;</code></a>.<br />
+2. Create a code base using the starter: <a href="#ns-newcode"><code>ns newcode -c &lt;code path&gt; -s &lt;starter&gt;</code></a>.
+3. The code base will have a <code>meta</code> directory with a sample ns file <code>meta/ns.yml</code>.  You can modify the ns file to change data types for dynamic files and any static information needed.  After any modifications, regenerate the code using <a href="#ns-generate"><code>ns generate -c &lt;code&gt;</code></a>
+4. Anyone can add custom code.  But periodically run  <a href="#ns-test"><code>ns test -c &lt;code&gt;</code></a> to be certain you did it right.  (Otherwise, some of your changes will not be preserved when <code>ns-generate</code> is run in the future.)</p>
+<p>Whenever you want to run an updated version of the template, create a new starter (as in step 1) and then run <code>ns generate -c &lt;code&gt;</code> again.</p>
+<p>See the <a href="https://github.com/NoStackApp/ns-flip/wiki">documentation</a>.  Here's a <a href="https://github.com/YizYah/basicNsFrontTemplate">sample template</a>.</p>
+<h2 id="plans">Plans</h2>
+<ul>
+<li>Add a default test before generating unless <code>--force</code> is used</li>
+<li>Allow sample.custom.json for a starter.  A starter could optionally be a fully customized app.</li>
+<li>Remove the extra tags in custom delimiters (They are no longer necessary in the current implmentation)</li>
+<li>Allow the template to specify comment delimiters.  (Currently, the languages must support at least one of the comment formats of javascript (that is, <code>// comment</code> or <code>/* comment */</code>) or embed them within additional comment delimiters).</li>
+<li>Templates should contain precise specification of frameworks supported and code sections, so that different templates can be compared for compatibility.  That way, if a project's code base was generated with one template, it could be moved over to other compatible templates.</li>
+<li>A searchable repository of templates.</li>
+<li>A new command <code>ns checkVersion -t &lt;template&gt;</code> which checks for updates.</li>
+<li>Commands to simplify creation of templates from sample code.</li>
+<li>Instructions for using a template added to the <code>meta</code> directory.</li>
+<li>Input fields in <code>ns.yml</code> files to accept fields defined in another file. </li>
+<li><code>ns.yml</code> interactive generator.</li>
+</ul>
+<h2 id="contributing">Contributing</h2>
+<p>Please do! <a href="https://github.com/https://github.com/NoStackApp/ns-flip/issues/new">Open an issue</a> and start talking to us!  Or just reach out to info at nostack dot net.</p>
+<h2 id="usage">Usage</h2>
+<!-- usage -->
+
+<pre><code class="language-sh-session">$ npm install -g ns-flip
+$ ns COMMAND
+running command...
+$ ns (-v|--version|version)
+ns-flip/1.0.0 linux-x64 node-v14.9.0
+$ ns --help [COMMAND]
+USAGE
+  $ ns COMMAND
+...
+</code></pre>
+<!-- usagestop -->
+
+<h2 id="commands">Commands</h2>
+<!-- commands -->
+<ul>
+<li><a href="#ns-generate"><code>ns generate</code></a></li>
+<li><a href="#ns-help-command"><code>ns help [COMMAND]</code></a></li>
+<li><a href="#ns-newcode"><code>ns newcode</code></a></li>
+<li><a href="#ns-newstarter"><code>ns newstarter</code></a></li>
+<li><a href="#ns-test"><code>ns test</code></a></li>
+</ul>
+<h3 id="ns-generate"><code>ns generate</code></h3>
+<p>generates (or regenerates) code based on a meta file <code>ns.yml</code>, preserving custom changes. The code directory must have been created for the first time using <code>newcode</code>.</p>
+<pre><code>USAGE
+  $ ns generate
+
+OPTIONS
+  -c, --codeDir=codeDir  code directory
+  -h, --help             show CLI help
+
+EXAMPLE
+  $ nd generate -c ~/temp/myapp
+</code></pre>
+<p><em>See code: <a href="https://github.com/NoStackApp/ns-flip/blob/v1.0.0/src/commands/generate.ts">src/commands/generate.ts</a></em></p>
+<h3 id="ns-help-command"><code>ns help [COMMAND]</code></h3>
+<p>display help for ns</p>
+<pre><code>USAGE
+  $ ns help [COMMAND]
+
+ARGUMENTS
+  COMMAND  command to show help for
+
+OPTIONS
+  --all  see all commands in CLI
+</code></pre>
+<p><em>See code: <a href="https://github.com/oclif/plugin-help/blob/v3.2.0/src/commands/help.ts">@oclif/plugin-help</a></em></p>
+<h3 id="ns-newcode"><code>ns newcode</code></h3>
+<p>new code base, based on a starter. You can use <code>generate</code> to update based on the <code>ns.yml</code> file.</p>
+<pre><code>USAGE
+  $ ns newcode
+
+OPTIONS
+  -c, --codeDir=codeDir        code base directory
+  -h, --help                   show CLI help
+  -s, --starterDir=starterDir  starter directory.
+
+EXAMPLE
+  $ ns newcode -c ~/temp/myapp -s ~/temp/starter
+</code></pre>
+<p><em>See code: <a href="https://github.com/NoStackApp/ns-flip/blob/v1.0.0/src/commands/newcode.ts">src/commands/newcode.ts</a></em></p>
+<h3 id="ns-newstarter"><code>ns newstarter</code></h3>
+<p>create new starter from a template.  You can then generate a new code base from it using <code>newCode</code>.</p>
+<pre><code>USAGE
+  $ ns newstarter
+
+OPTIONS
+  -h, --help                     show CLI help
+  -s, --starterDir=starterDir    starter directory
+  -t, --templateDir=templateDir  template directory
+
+EXAMPLE
+  $ ns newstarter -t ~/templates/basicTemplate -s ~/temp/mystarter
+</code></pre>
+<p><em>See code: <a href="https://github.com/NoStackApp/ns-flip/blob/v1.0.0/src/commands/newstarter.ts">src/commands/newstarter.ts</a></em></p>
+<h3 id="ns-test"><code>ns test</code></h3>
+<p>Confirms that your custom changes have been entered safely, allowing you to generate with an updated or replaced template, or with a changed 'ns.yml' file. For documentation about the rules for custom code placement, please see https://github.com/NoStackApp/ns-flip/wiki/Safe-Custom-Code.</p>
+<pre><code>USAGE
+  $ ns test
+
+OPTIONS
+  -c, --codeDir=codeDir  code base directory
+  -h, --help             show CLI help
+
+DESCRIPTION
+  Essentially, the test generates a new version of the code and then simply compares it against your current version.  
+  If there are differences, then there is a problem with your code.
+
+EXAMPLE
+  $ ns test -c ~/temp/myApp
+</code></pre>
+<p><em>See code: <a href="https://github.com/NoStackApp/ns-flip/blob/v1.0.0/src/commands/test.ts">src/commands/test.ts</a></em>
+<!-- commandsstop -->
+</p></div>
+                <footer>
+    <div class="footer-note">
+        <p>
+            Built with <a href="http://www.mkdocs.org">MkDocs</a> using
+            <a href="https://github.com/daizutabi/mkdocs-ivory">Ivory theme</a>.
+        </p>
+    </div>
+</footer>
+            </div>
+        </main>
+    </div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme.js"></script>
+    <script src="search/main.js"></script>
+</body>
+
+</html>
